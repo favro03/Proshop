@@ -15,7 +15,7 @@ const ProductScreen = ({}) => {
           setProduct(data)
         }
         fetchProduct()
-        }, [])
+        }, [params])
 
     //this was used to pull product data from the products.js file
     // const params =  useParams();
