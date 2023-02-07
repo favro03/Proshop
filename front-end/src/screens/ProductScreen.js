@@ -1,32 +1,48 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import { Link, useParams} from 'react-router-dom'
+import {usseDispatch, useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button} from 'react-bootstrap'
 import Rating from '../components/Rating'
-import axios from 'axios'
+import { listProductsDetails } from '../actions/productActions'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+
 
 const ProductScreen = ({}) => {
     const params = useParams();
-    //this is what is used to pull from the backend server
-    const [product, setProduct] = useState({})
+    const dispatch = useDispatch()
+    const productDetails = useSelector((state) => state.productDetails)
+    const { loading, error, product} = productDetails
+   
+   
     useEffect(() =>{
-        const fetchProduct = async () => {
-            //axios is another tool for fetch
-          const {data} = await axios.get(`/api/products/${params.id}`)
-          setProduct(data)
-        }
-        fetchProduct()
-        }, [params])
+        
+        dispatch(listProductsDetails(params.id))
+
+       
+        // const fetchProduct = async () => {
+        //     //axios is another tool for fetch
+        //   const {data} = await axios.get(`/api/products/${params.id}`)
+        //   setProduct(data)
+        // }
+        // fetchProduct()
+        }, [dispatch, params])
 
     //this was used to pull product data from the products.js file
     // const params =  useParams();
     // const product = products.find(p => p._id === params.id)
-    
+  
   return (
     <>
       <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>
-      <Row>
+      {loading ? (
+      <Loader /> 
+      ): error ? (
+      <Message variant='danger'>{error}</Message>) 
+      :(
+        <Row>
         <Col md={6}>
             <Image src={product.image} alt={product.name} fluid/>
         </Col>
@@ -78,6 +94,8 @@ const ProductScreen = ({}) => {
             </Card>
         </Col>
       </Row>
+      )}
+      
     </>
   )
 }
