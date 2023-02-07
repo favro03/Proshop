@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
-import { Link, useParams} from 'react-router-dom'
-import {usseDispatch, useSelector, useDispatch } from 'react-redux'
-import { Row, Col, Image, ListGroup, Card, Button} from 'react-bootstrap'
+import React, {useState, useEffect} from 'react'
+import { Link, useParams, useNavigate} from 'react-router-dom'
+import {useDispatch, useSelector } from 'react-redux'
+import { Row, Col, Image, ListGroup, Card, Button, Form} from 'react-bootstrap'
 import Rating from '../components/Rating'
 import { listProductsDetails } from '../actions/productActions'
 import Message from '../components/Message'
@@ -9,6 +9,8 @@ import Loader from '../components/Loader'
 
 
 const ProductScreen = ({}) => {
+    const history = useNavigate()
+    const [qty, setQty] = useState(0)
     const params = useParams();
     const dispatch = useDispatch()
     const productDetails = useSelector((state) => state.productDetails)
@@ -16,10 +18,7 @@ const ProductScreen = ({}) => {
    
    
     useEffect(() =>{
-        
         dispatch(listProductsDetails(params.id))
-
-       
         // const fetchProduct = async () => {
         //     //axios is another tool for fetch
         //   const {data} = await axios.get(`/api/products/${params.id}`)
@@ -28,9 +27,12 @@ const ProductScreen = ({}) => {
         // fetchProduct()
         }, [dispatch, params])
 
-    //this was used to pull product data from the products.js file
-    // const params =  useParams();
-    // const product = products.find(p => p._id === params.id)
+        const addToCartHandler = () => {
+            history(`/cart/${params.id}?qty=${qty}`)
+
+        }
+
+        
   
   return (
     <>
@@ -87,8 +89,32 @@ const ProductScreen = ({}) => {
                             </Col>
                         </Row>
                     </ListGroup.Item>
+                    {product.countInStock > 0 && (
+                        <ListGroup.Item>
+                            <Row>
+                                <Col>qty</Col>
+                                <Col>
+                                    <Form.Control as='select' value={qty} onChange={(e) =>
+                                    setQty(e.target.value)}>
+                                        {[...Array(product.countInStock).keys()].map((x) => (
+                                            <option key={x + 1} value ={x + 1}>
+                                                {x+1}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Col>
+                            </Row>
+                        </ListGroup.Item>
+                    )}
                     <ListGroup.Item>
-                        <Button className='btn-block' type='button' disabled={product.countInStock === 0}>Add to Cart</Button>
+                    <Button
+                      onClick={addToCartHandler}
+                      className='btn-block'
+                      type='button'
+                      disabled={product.countInStock === 0}
+                    >
+                        Add to Cart
+                    </Button>
                     </ListGroup.Item>
                 </ListGroup>
             </Card>
