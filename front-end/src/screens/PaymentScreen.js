@@ -19,11 +19,13 @@ const PaymentScreen = ({}) => {
 
     const dispatch = useDispatch()
 
-    const submitHandler= (e) => {
+    const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(savePaymentMethod({paymentMethod}))
+        dispatch(savePaymentMethod(paymentMethod))
         history('/placeorder')
-    }
+      }
+
+      
  
     return (
         <FormContainer>
