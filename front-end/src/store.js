@@ -13,6 +13,7 @@ import {
     userUpdateProfileReducer 
 } from './reducers/userReducers'
 import { orderCreateReducer } from './reducers/orderReducers'
+import { orderDetailsReducer } from './reducers/orderReducers'
 
 const reducer = combineReducers({
     //this shows the peice of state
@@ -24,6 +25,7 @@ const reducer = combineReducers({
     userDetails: userDetailsReducer,
     userUpdateProfile: userUpdateProfileReducer,
     orderCreate: orderCreateReducer,
+    orderDetails: orderDetailsReducer,
 
 })
 
