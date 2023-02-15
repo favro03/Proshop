@@ -12,8 +12,13 @@ import {
     userRegisterReducer, 
     userUpdateProfileReducer 
 } from './reducers/userReducers'
-import { orderCreateReducer } from './reducers/orderReducers'
-import { orderDetailsReducer } from './reducers/orderReducers'
+import { 
+    orderCreateReducer, 
+    orderDetailsReducer ,
+    orderPayReducer,
+    orderListMyReducer,
+ } from './reducers/orderReducers'
+
 
 const reducer = combineReducers({
     //this shows the peice of state
@@ -26,6 +31,8 @@ const reducer = combineReducers({
     userUpdateProfile: userUpdateProfileReducer,
     orderCreate: orderCreateReducer,
     orderDetails: orderDetailsReducer,
+    orderPay: orderPayReducer,
+    orderListMy: orderListMyReducer,
 
 })
 
