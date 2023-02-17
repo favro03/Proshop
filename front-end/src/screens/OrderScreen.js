@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link,  useNavigate, useParams} from 'react-router-dom'
+import { Link,  useParams} from 'react-router-dom'
 import {  Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -12,7 +12,7 @@ import { ORDER_PAY_RESET } from '../constants/orderConstants'
 const OrderScreen = () => {
     const  [sdkReady, setSdkReady] = useState(false)
     const dispatch = useDispatch()
-    const history = useNavigate()
+   
     const params = useParams()
     const orderId = params.id
     
