@@ -4,7 +4,7 @@ import { legacy_createStore, combineReducers, applyMiddleware, } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 //brining in the reducer
-import { productListReducer, productDetailsReducer } from './reducers/productReducers'
+import { productListReducer, productDetailsReducer,productDeleteReducer } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import { 
     userDetailsReducer, 
@@ -27,6 +27,7 @@ const reducer = combineReducers({
     //this shows the peice of state
     productList: productListReducer,
     productDetails: productDetailsReducer,
+    productDelete:productDeleteReducer,
     cart: cartReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
