@@ -5,7 +5,7 @@ import Product from '../models/productModel.js'
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 10
+  const pageSize =10  //this sets it to how many per page we want to show
   const page = Number(req.query.pageNumber) || 1
 
   const keyword = req.query.keyword  //this is how you use URL/?
