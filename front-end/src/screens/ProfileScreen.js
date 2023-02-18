@@ -8,6 +8,7 @@ import Loader from '../components/Loader'
 //this is the action import
 import {getUserDetails, updateUserProfile} from '../actions/userActions'
 import { listMyOrders} from '../actions/orderActions' 
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 
 const ProfileScreen = (location) => {
@@ -32,19 +33,20 @@ const ProfileScreen = (location) => {
     const orderListMy = useSelector((state) => state.orderListMy)
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
     
-    useEffect(() => {
-      if (!userInfo) {
-        history('/login')
-      }else {
-        if(!user.name){
-            dispatch(getUserDetails('profile'))
-            dispatch(listMyOrders())
-        }else{
-            setName(user.name)
-            setEmail(user.email)
-        }
+  useEffect(() => {
+    if (!userInfo) {
+      history('/login')
+    } else {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET })
+        dispatch(getUserDetails('profile'))
+        dispatch(listMyOrders())
+      } else {
+        setName(user.name)
+        setEmail(user.email)
       }
-    }, [dispatch, history, userInfo, user])
+    }
+  }, [dispatch, history, userInfo, user, success])
   
     const submitHandler = (e) => {
       e.preventDefault()
