@@ -35,15 +35,17 @@ const ProductScreen = () => {
   } = productReviewCreate
 
   useEffect(() => {
-    // if (successProductReview) {
-    //   setRating(0)
-    //   setComment('')
-    // }
+    if (successProductReview) {
+      alert('Review Submitted!')
+      setRating(0)
+      setComment('')
+
+    }
     if (!product._id || product._id !== params.id) {
       dispatch(listProductDetails(params.id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
-  }, [dispatch, params,product._id])
+  }, [dispatch, params,product._id, successProductReview])
 
   const addToCartHandler = () => {
     history(`/cart/${params.id}?qty=${qty}`)
